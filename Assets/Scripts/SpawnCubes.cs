@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-[ExecuteInEditMode]
+//[ExecuteInEditMode]
 public class SpawnCubes : MonoBehaviour
 {
 	public Vector3Int size = new Vector3Int(16, 4, 16);
