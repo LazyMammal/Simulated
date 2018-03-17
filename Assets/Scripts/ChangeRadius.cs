@@ -16,13 +16,12 @@ public class ChangeRadius : MonoBehaviour
     {
         if (Input.anyKeyDown)
         {
-			//UpdateRadius(334, 100f);
-			//UpdateRadius(gCtrl.propertyID, gCtrl.planetRadius);
+			UpdateRadius(gCtrl.propertyID, gCtrl.planetRadius);
         }
     }
 
     void UpdateRadius(int propertyID, float planetRadius)
     {
-        rend.sharedMaterial.SetFloat(propertyID, planetRadius);
+        rend.material.SetFloat(propertyID, planetRadius);
     }
 }
