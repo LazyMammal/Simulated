@@ -9,8 +9,7 @@ public class ChangeRadius : MonoBehaviour
     {
         rend = GetComponent<Renderer>();
         gCtrl = Camera.main.gameObject.GetComponent<GameController>();
-        //UpdateRadius(gCtrl.propertyID, gCtrl.planetRadius);
-		UpdateRadius(334, 100f);
+        UpdateRadius(gCtrl.propertyID, gCtrl.planetRadius);
     }
 
     void Update()
