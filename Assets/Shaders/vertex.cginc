@@ -42,6 +42,11 @@ float4 waves (inout float4 vertex) {
     return mul(unity_WorldToObject, float4(worldPos, 1.));
 }
 
+/* Cube-Sphere projection math by Jeija
+   https://youtu.be/joFWr3JzBOI
+   https://github.com/Jeija/spheretest
+*/
+
 float gPlanetRadius;
 
 float4 planet (inout float4 vertex) {
