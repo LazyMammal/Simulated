@@ -1,4 +1,15 @@
-﻿using System;
+﻿/*
+	Run continuously in the Editor.
+
+	Purpose:
+		Allows custom shaders to update every frame without going into Play mode.
+
+	Usage:
+		"Window" menu, "Runs In Editor".
+		Panel must be visible at all times for OnGUI() to trigger.
+*/
+
+using System;
 using UnityEditor;
 using UnityEngine;
 
@@ -30,6 +41,6 @@ public class RunsInEditor : EditorWindow
         {
             isRunning = !isRunning;
         }
-		playButton = isRunning ? "Stop" : "Play";
+		playButton = isRunning ? "Stop" : "Start";
     }
 }
