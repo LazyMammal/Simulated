@@ -2,49 +2,34 @@
 using UnityEditor;
 using UnityEngine;
 
-[ExecuteInEditMode]
-public class RunsInEditor : MonoBehaviour
+public class RunsInEditor : EditorWindow
 {
-    void Start()
-    {
-        this.runInEditMode = true;
-    }
-    public void Update()
-    {
-        transform.Rotate(.01f, 0, 0);
-    }
-}
+    static private string playButton = "";
+    static private bool isRunning = true;
 
-public class RunInEditor : EditorWindow
-{
-	string playButton = "Stop";
-	bool isRunning = true;
-    
     [MenuItem("Window/Runs In Editor")]
     static void Initialize()
     {
         Type inspectorType = Type.GetType("UnityEditor.InspectorWindow,UnityEditor.dll");
-        EditorWindow window = EditorWindow.GetWindow<RunInEditor>("Runs In Editor", new Type[] { inspectorType });
+        EditorWindow window = EditorWindow.GetWindow<RunsInEditor>("Runs In Editor", new Type[] { inspectorType });
     }
     void Update()
     {
         if (isRunning && !EditorApplication.isPlaying)
         {
-            foreach (GameObject go in GameObject.FindGameObjectsWithTag("EditorOnly"))
-            {
-                var comp = go.GetComponent<RunsInEditor>();
-                if (comp) comp.Update();
-            }
+			var scale = Camera.main.transform.localScale;
+			scale.x *= 1.0f + 0.001f * Mathf.Sin((float)EditorApplication.timeSinceStartup * 100.0f);
+			Camera.main.transform.localScale = scale;
         }
     }
 
-	void OnGUI()
-	{
-		EditorGUILayout.Space();
-		if (GUILayout.Button(playButton))
+    void OnGUI()
+    {
+        EditorGUILayout.Space();
+        if (GUILayout.Button(playButton))
         {
-			isRunning = !isRunning;
-			playButton = isRunning ? "Stop" : "Play";
-		}
-	}
+            isRunning = !isRunning;
+        }
+		playButton = isRunning ? "Stop" : "Play";
+    }
 }
