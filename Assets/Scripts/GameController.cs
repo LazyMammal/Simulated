@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
-    public float planetRadius = 25f;
+    public float planetRadius = 22.5f;
     public int propertyID = 334;
     public string propertyName = "_PlanetRadius";
     public float minRadius = 10f;
@@ -13,6 +13,7 @@ public class GameController : MonoBehaviour
     void Start()
     {
         propertyID = Shader.PropertyToID(propertyName);
+
         //Shader.SetGlobalFloat(propertyID, planetRadius);
 
         Camera.main.cullingMatrix = new Matrix4x4(Vector4.zero, Vector4.zero,
