@@ -1,19 +1,22 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
     public float planetRadius = 22.5f;
-    public int propertyID = 334;
+    public int propertyID;
     public string propertyName = "_PlanetRadius";
     public float minRadius = 10f;
     public float growFactor = 1.5f;
+	public Text radiusText;
+
+    void Awake()
+    {
+        propertyID = Shader.PropertyToID(propertyName);
+	}
 
     void Start()
     {
-        propertyID = Shader.PropertyToID(propertyName);
-
         //Shader.SetGlobalFloat(propertyID, planetRadius);
 
         Camera.main.cullingMatrix = new Matrix4x4(Vector4.zero, Vector4.zero,
@@ -32,15 +35,18 @@ public class GameController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Equals) || Input.GetKeyDown(KeyCode.KeypadPlus))
         {
-            planetRadius *= growFactor;
-            planetRadius = Mathf.Max(minRadius, planetRadius);
-            //Shader.SetGlobalFloat(propertyID, planetRadius);
+			UpdateRadius(planetRadius * growFactor);
         }
         if (Input.GetKeyDown(KeyCode.Minus) || Input.GetKeyDown(KeyCode.KeypadMinus))
         {
-            planetRadius /= growFactor;
-            planetRadius = Mathf.Max(minRadius, planetRadius);
-            //Shader.SetGlobalFloat(propertyID, planetRadius);
+			UpdateRadius(planetRadius / growFactor);
         }
     }
+
+	void UpdateRadius(float newRadius)
+	{
+		planetRadius = Mathf.Max(minRadius, newRadius);
+		radiusText.text = "Radius:  " + Mathf.Round(planetRadius);
+		//Shader.SetGlobalFloat(propertyID, planetRadius);
+	}
 }
