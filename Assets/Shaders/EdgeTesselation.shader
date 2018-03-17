@@ -1,7 +1,7 @@
 ﻿Shader "Custom/EdgeTesselation" {
     Properties {
         _Distort ("Distort", Range(0,1)) = 1
-        _EdgeLength ("Edge length", Range(2,50)) = 15
+        _EdgeLength ("Edge length", Range(2,50)) = 5
         _MainTex ("Base (RGB)", 2D) = "white" {}
         _NormalMap ("Normalmap", 2D) = "bump" {}
         _Color ("Color", color) = (1,1,1,0)

@@ -2,7 +2,7 @@
     Properties {
 
         _Distort ("Distort", Range(0,1)) = 1
-        _EdgeLength ("Edge length", Range(2,50)) = 15
+        _EdgeLength ("Edge length", Range(2,50)) = 5
 
     }
     SubShader {
