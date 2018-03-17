@@ -18,7 +18,7 @@ public class RunsInEditor : EditorWindow
         if (isRunning && !EditorApplication.isPlaying)
         {
 			var scale = Camera.main.transform.localScale;
-			scale.x *= 1.0f + 0.001f * Mathf.Sin((float)EditorApplication.timeSinceStartup * 100.0f);
+			scale.x *= 1.0f + 0.0001f * Mathf.Sin((float)EditorApplication.timeSinceStartup * 100.0f);
 			Camera.main.transform.localScale = scale;
         }
     }
