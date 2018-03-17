@@ -1,4 +1,6 @@
-﻿/*
+﻿#if UNITY_EDITOR
+
+/*
     Run continuously in the Editor.
 
     Purpose:
@@ -43,3 +45,5 @@ public class RunsInEditor : EditorWindow
         playButton = isRunning ? "Stop" : "Start";
     }
 }
+
+#endif
