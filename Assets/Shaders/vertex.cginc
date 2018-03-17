@@ -2,7 +2,7 @@
     Properties {
 
         _Distort ("Distort", Range(0,1)) = 1
-        _PlanetRadius ("_PlanetRadius", Range(10,50000)) = 22.5
+        _PlanetRadius ("Planet Radius", Range(10,50000)) = 22.5
         _EdgeLength ("Edge length", Range(2,50)) = 5
 
     }
@@ -42,10 +42,10 @@ float4 waves (inout float4 vertex) {
     return mul(unity_WorldToObject, float4(worldPos, 1.));
 }
 
-float _PlanetRadius;
+float gPlanetRadius;
 
 float4 planet (inout float4 vertex) {
-    float rp = max(_PlanetRadius, 10.);
+    float rp = max(gPlanetRadius, 10.);
 
     float3 pos = mul(unity_ObjectToWorld,vertex).xyz;
     float3 camPos = _WorldSpaceCameraPos;

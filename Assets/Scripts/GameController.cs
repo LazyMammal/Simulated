@@ -17,8 +17,6 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
-        //Shader.SetGlobalFloat(propertyID, planetRadius);
-
         Camera.main.cullingMatrix = new Matrix4x4(Vector4.zero, Vector4.zero,
                                     new Vector4(0.0f, 0.0f, 1.0f, 1.0f), new Vector4(0.0f, 0.0f, -0.6f, 0.0f));
 		/*
@@ -29,6 +27,8 @@ public class GameController : MonoBehaviour
                 Camera.main.cullingMatrix.GetColumn(2) + "\n" +
                 Camera.main.cullingMatrix.GetColumn(3));
 		 */
+
+		 UpdateRadius(planetRadius);
     }
 
     void Update()
@@ -47,6 +47,6 @@ public class GameController : MonoBehaviour
 	{
 		planetRadius = Mathf.Max(minRadius, newRadius);
 		radiusText.text = "Radius:  " + Mathf.Round(planetRadius);
-		//Shader.SetGlobalFloat(propertyID, planetRadius);
+		Shader.SetGlobalFloat("gPlanetRadius", planetRadius);
 	}
 }
