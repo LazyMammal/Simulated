@@ -6,7 +6,7 @@
 
     Usage:
         "Window" menu, "Runs In Editor".
-        Panel must be visible at all times for OnGUI() to trigger.
+        Panel must be visible at all times for Update() to trigger.
 */
 
 using System;
@@ -33,7 +33,6 @@ public class RunsInEditor : EditorWindow
             Camera.main.transform.localScale = scale;
         }
     }
-
     void OnGUI()
     {
         EditorGUILayout.Space();
