@@ -1,6 +1,7 @@
 ﻿Shader "Custom/PhongTesselation" {
     Properties {
         _Distort ("Distort", Range(0,1)) = 1
+        _PlanetRadius ("PlanetRadius", Range(10,50000)) = 320
         _EdgeLength ("Edge length", Range(2,50)) = 5
         _Phong ("Phong Strengh", Range(0,1)) = 0.5
         _MainTex ("Base (RGB)", 2D) = "white" {}

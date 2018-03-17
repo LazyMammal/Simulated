@@ -2,6 +2,7 @@
     Properties {
 
         _Distort ("Distort", Range(0,1)) = 1
+        _PlanetRadius ("PlanetRadius", Range(10,50000)) = 320
         _EdgeLength ("Edge length", Range(2,50)) = 5
 
     }
@@ -34,12 +35,37 @@ float4 tess (appdata v0, appdata v1, appdata v2)
 
 float _Distort;
 
-void vert (inout appdata v) {
-    float3 worldPos = mul(unity_ObjectToWorld,v.vertex).xyz;
+float4 waves (inout float4 vertex) {
+    float3 worldPos = mul(unity_ObjectToWorld,vertex).xyz;
     worldPos.x += sin(_Time[2] * (1. + worldPos.z / 1000.));
     worldPos.y += sin(_Time[2] * (1. + worldPos.z / 2000.));
-    float4 objectPos = mul(unity_WorldToObject, float4(worldPos, 1.));
-    v.vertex = lerp(v.vertex, objectPos, _Distort);
+    return mul(unity_WorldToObject, float4(worldPos, 1.));
+}
+
+float _PlanetRadius;
+
+float4 planet (inout float4 vertex) {
+    float rp = max(_PlanetRadius, 10.);
+
+    float3 pos = mul(unity_ObjectToWorld,vertex).xyz;
+    float3 camPos = _WorldSpaceCameraPos;
+
+    float3 planeDiff = float3(pos - camPos);
+    float2 planeDir = normalize(planeDiff.xz);
+    float2 plane = float2(planeDiff.y, sqrt(dot(planeDiff.xz, planeDiff.xz)));
+    float2 planeDiv = plane / rp;
+    float2 planeExp = exp(planeDiv.x) * float2(cos(planeDiv.y), sin(planeDiv.y));
+	float2 circle = rp * planeExp - float2(rp, 0);
+
+    pos.x = circle.y * planeDir.x + camPos.x;
+	pos.z = circle.y * planeDir.y + camPos.z;
+	pos.y = circle.x + camPos.y;
+
+    return mul(unity_WorldToObject, float4(pos, 1.));
+}
+
+void vert (inout appdata v) {
+    v.vertex = lerp(v.vertex, planet(v.vertex), _Distort);
 }
 
 /*
