@@ -1,6 +1,7 @@
 ﻿/*
     Properties {
 
+        _Distort ("Distort", Range(0,1)) = 1
         _EdgeLength ("Edge length", Range(2,50)) = 15
 
     }
@@ -31,10 +32,14 @@ float4 tess (appdata v0, appdata v1, appdata v2)
     return UnityEdgeLengthBasedTess (v0.vertex, v1.vertex, v2.vertex, _EdgeLength);
 }
 
+float _Distort;
+
 void vert (inout appdata v) {
     float3 worldPos = mul(unity_ObjectToWorld,v.vertex).xyz;
-    worldPos.x += sin(_Time[2]);
-    v.vertex = mul(unity_WorldToObject,float4(worldPos, 1.));
+    worldPos.x += sin(_Time[2] * (1. + worldPos.z / 1000.));
+    worldPos.y += sin(_Time[2] * (1. + worldPos.z / 2000.));
+    float4 objectPos = mul(unity_WorldToObject, float4(worldPos, 1.));
+    v.vertex = lerp(v.vertex, objectPos, _Distort);
 }
 
 /*
