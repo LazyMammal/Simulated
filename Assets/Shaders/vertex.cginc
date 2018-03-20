@@ -1,45 +1,27 @@
 ﻿/*
     Properties {
-
         _Distort ("Distort", Range(0,1)) = 1
-        _PlanetRadius ("Planet Radius", Range(10,50000)) = 22.5
         _EdgeLength ("Edge length", Range(2,50)) = 5
-
     }
     SubShader {
         CGPROGRAM
-
-        #pragma surface vertex:vert tessellate:tess
+        #pragma surface surf Lambert vertex:vert tessellate:tess nolightmap nodirlightmap [alpha:fade]
         #include "vertex.cginc"
 
         ENDCG
+
+        Pass {
+        }
     }
 */
 
 #pragma target 4.6
 #include "Tessellation.cginc"
 
-struct appdata {
-    float4 vertex : POSITION;
-    float4 tangent : TANGENT;
-    float3 normal : NORMAL;
-    float2 texcoord : TEXCOORD0;
-};
-
 float _EdgeLength;
 
-float4 tess (appdata v0, appdata v1, appdata v2)
-{
+float4 tess (appdata_full v0, appdata_full v1, appdata_full v2) {
     return UnityEdgeLengthBasedTess (v0.vertex, v1.vertex, v2.vertex, _EdgeLength);
-}
-
-float _Distort;
-
-float4 waves (inout float4 vertex) {
-    float3 worldPos = mul(unity_ObjectToWorld,vertex).xyz;
-    worldPos.x += sin(_Time[2] * (1. + worldPos.z / 1000.));
-    worldPos.y += sin(_Time[2] * (1. + worldPos.z / 2000.));
-    return mul(unity_WorldToObject, float4(worldPos, 1.));
 }
 
 /* Cube-Sphere projection math by Jeija
@@ -47,9 +29,10 @@ float4 waves (inout float4 vertex) {
    https://github.com/Jeija/spheretest
 */
 
+float _Distort;
 float gPlanetRadius;
 
-float4 planet (inout float4 vertex) {
+float4 planet (float4 vertex) {
     float rp = max(gPlanetRadius, 10.);
 
     float3 pos = mul(unity_ObjectToWorld,vertex).xyz;
@@ -69,7 +52,7 @@ float4 planet (inout float4 vertex) {
     return mul(unity_WorldToObject, float4(pos, 1.));
 }
 
-void vert (inout appdata v) {
+void vert (inout appdata_full v) {
     v.vertex = lerp(v.vertex, planet(v.vertex), _Distort);
 }
 

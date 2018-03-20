@@ -10,7 +10,7 @@ public class SpawnCubes : MonoBehaviour
     {
 		Transform[] allChildren = GetComponentsInChildren<Transform>();
 		foreach(Transform child in allChildren) {
-			if( child != transform)
+			if( child && child != transform)
 			{
 				DestroyImmediate(child.gameObject);
 			}
